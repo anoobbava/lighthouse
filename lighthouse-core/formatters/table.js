@@ -86,6 +86,8 @@ class Table extends Formatter {
         switch (key) {
           case 'code':
             return '`' + value.trim() + '`';
+          case 'pre':
+            return '\`\`\`\n' + result[key].trim() + '\`\`\`';
           case 'lineCol':
             return `${result.line}:${result.col}`;
           default:
