@@ -26,6 +26,12 @@ describe('Performance: user-timings audit', () => {
     const auditResult = Audit.audit({
       traces: {[Audit.DEFAULT_PASS]: {traceEvents}}
     });
+
+    const blackListedUTs = auditResult.extendedInfo.value.filter(timing => {
+      return Audit.blacklistedPrefixes.some(prefix => timing.name.startsWith(prefix));
+    });
+    assert.equal(blackListedUTs.length, 0, 'Blacklisted usertimings included in results');
+
     assert.equal(auditResult.score, true);
     assert.equal(auditResult.displayValue, 2);
 

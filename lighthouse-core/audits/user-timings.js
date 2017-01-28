@@ -125,13 +125,22 @@ class UserTimings extends Audit {
     };
   }
 
+  // We'll remove mark/measures entered by third parties not of interest to the user
+  static get blacklistedPrefixes() {
+    return ['goog_'];
+  }
+
+  static excludeBlacklisted(timing) {
+    return UserTimings.blacklistedPrefixes.every(prefix => !timing.name.startsWith(prefix));
+  }
+
   /**
    * @param {!Artifacts} artifacts
    * @return {!AuditResult}
    */
   static audit(artifacts) {
     const traceContents = artifacts.traces[Audit.DEFAULT_PASS].traceEvents;
-    const userTimings = filterTrace(traceContents);
+    const userTimings = filterTrace(traceContents).filter(UserTimings.excludeBlacklisted);
 
     return UserTimings.generateAuditResult({
       rawValue: true,
