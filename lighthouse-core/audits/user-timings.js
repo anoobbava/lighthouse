@@ -125,11 +125,18 @@ class UserTimings extends Audit {
     };
   }
 
-  // We'll remove mark/measures entered by third parties not of interest to the user
+  /**
+   * @return {!Array<string>}
+   */
   static get blacklistedPrefixes() {
     return ['goog_'];
   }
 
+  /**
+   * We remove mark/measures entered by third parties not of interest to the user
+   * @param {!UserTimingsExtendedInfo} artifacts
+   * @return {boolean}
+   */
   static excludeBlacklisted(timing) {
     return UserTimings.blacklistedPrefixes.every(prefix => !timing.name.startsWith(prefix));
   }
