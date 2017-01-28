@@ -90,6 +90,7 @@ describe('TableFormatter', () => {
         {value: 'bar'},
       ]
     }), [
+      '      NAME VALUE\n',
       '      thing1 foo \n',
       '      thing2 -- \n',
       '      -- bar \n',
@@ -105,6 +106,7 @@ describe('TableFormatter', () => {
         {name: 'thing2', value: false},
       ]
     }), [
+      '      NAME VALUE\n',
       '      thing1 5 \n',
       '      thing2 false \n',
     ].join(''));
