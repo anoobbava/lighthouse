@@ -43,3 +43,10 @@ Promise.all(loadPolyfillPromises).then(_ => {
   // eslint-disable-next-line no-new
   new LighthouseViewerReport();
 });
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js', {scope: './'}).catch(e => {
+    // eslint-disable-next-line no-console
+    console.error('Error during service worker registration:', e);
+  });
+}
